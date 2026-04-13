@@ -19,30 +19,39 @@ async function searchWord(){
 
         const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
         const data = await response.json();
-        if(!response.ok){
+        
+        if(data.title === "No Definitions Found"){
             throw new Error("Hmm, howdy seems we cant find the meaning")
         }
-        else{
-            const worddata = data[0];
-            const discovered = worddata.meanings.map(meaning=>{
-                const definitions= meaning.definitions.map(def => `<li>${def.definition}</li>`).join("");
-                return `<h3>${meaning.partOfSpeech}</h3><ul>${definitions}</ul>`;
+        
+        const worddata = data[0];
+        
+        const discovered = worddata.meanings.map(meaning=>{
+            const definition = meaning.definitions.slice(0,1).map(def => {
+                let definitionText = `<li>${def.definition}</li>`;
+                if(def.example){
+                    definitionText += `<li class="example">Example: ${def.example}</li>`;
+                }
+                return definitionText;
             }).join("");
-            resultSearch.innerHTML = `<h2>${worddata.word}</h2>${discovered}`;
-        }
+            return `<h3>${meaning.partOfSpeech}</h3><ul>${definition}</ul>`;
+        }).join("");
+        resultSearch.innerHTML = `<h2>${worddata.word}</h2>${discovered}`;
+        
     }catch(error){
+        console.log("Error:", error);
         resultSearch.innerHTML = `<p>"${word}" not found captain,</p>`;
     }
 }
 
-search.addEventListener("click",(e)=>{
-    e.preventDefault();
-    searchWord();
+search.addEventListener("click", (e) => {
+  e.preventDefault();
+  searchWord();
 });
 
-searchInput.addEventListener("keypress",(e)=>{
-    if(e.key === "Enter"){
-        e.preventDefault();
-        searchWord();
-    }
+searchInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    searchWord();
+  }
 });
