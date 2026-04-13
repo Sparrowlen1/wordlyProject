@@ -85,6 +85,7 @@ body {
     padding: 12px 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
     color: #fff;
+    cursor: pointer;
     font-weight: bolder;
     box-shadow: 0 8px 20px rgba(120, 48, 236, 0.25), 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
