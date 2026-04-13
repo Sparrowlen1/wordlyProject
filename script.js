@@ -4,6 +4,7 @@ const search = document.getElementById("searchB");
 const searchInput = document.getElementById("searchI");
 const resultSearch = document.querySelector(".resultsearch");
 const favouriteList = document.querySelector(".favouritelist");
+const themechange = document.querySelector(".themechange");
 
 //lets do async await for fetching since the .then and .catch is a bit tricky
 
@@ -55,3 +56,21 @@ searchInput.addEventListener("keypress", (e) => {
     searchWord();
   }
 });
+
+
+// dark mode functionn
+function toggletheme(){
+    document.body.classList.toggle("dark-mode");
+
+    const moonicon = themechange.querySelector("i");
+    const themetext = themechange.querySelector("p");
+
+    if(document.body.classList.contains("dark-mode")){
+        moonicon.className = "fa-regular fa-moon";
+        themetext.textContent = "Dark Mode";
+    } else {
+        moonicon.className = "fa-regular fa-sun";
+        themetext.textContent = "Light Mode";
+    }
+}
+themechange.addEventListener("click", toggletheme)
