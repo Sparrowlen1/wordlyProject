@@ -164,3 +164,33 @@ body {
     transform: translateY(-3px);
     box-shadow: 0 15px 30px rgba(255, 255, 255, 0.35), 0 6px 12px rgba(0, 0, 0, 0.15);
 }
+.boxcont .results .resultsearch {
+    display: block;
+    min-height: 100px;
+}
+
+.boxcont .results .resultsearch h2 {
+    color: rgb(23, 23, 23);
+    margin-bottom: 15px;
+    font-weight: bolder;
+}
+
+.boxcont .results .resultsearch h3 {
+    color: #810ec3;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.boxcont .results .resultsearch ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.boxcont .results .resultsearch li {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.boxcont .results .resultsearch p {
+    padding: 10px;
+}

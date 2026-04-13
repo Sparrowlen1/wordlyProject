@@ -1,3 +1,5 @@
+console.log("JavaScript is loaded and running!");
+
 const search = document.getElementById("searchB");
 const searchInput = document.getElementById("searchI");
 const resultSearch = document.querySelector(".resultsearch");
@@ -22,9 +24,9 @@ async function searchWord(){
         }
         else{
             const worddata = data[0];
-            const discovered = worddata.discovered.map(discover=>{
-                const definitions= discover.discovered.map(def => `<li>${def.definition}</li>`).join("");
-                return `<h3>${discover.partOfSpeech}</h3><ul>${definitions}</ul>`;
+            const discovered = worddata.meanings.map(meaning=>{
+                const definitions= meaning.definitions.map(def => `<li>${def.definition}</li>`).join("");
+                return `<h3>${meaning.partOfSpeech}</h3><ul>${definitions}</ul>`;
             }).join("");
             resultSearch.innerHTML = `<h2>${worddata.word}</h2>${discovered}`;
         }
