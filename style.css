@@ -81,6 +81,7 @@ body {
     gap: 10px;
     width: 150px;
     border-radius: 20px;
+    margin-top: 20px;
     border: 2px solid #7830ec;
     padding: 12px 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
@@ -106,6 +107,10 @@ body {
     padding: 12px 30px;
     color: #fff;
     cursor: pointer;
+}
+.header .themechange p{
+    color:#810ec3;
+    font-weight: bolder;
 }
 .header .themechange i {
     color: #fff;
@@ -171,7 +176,7 @@ body {
 }
 
 .boxcont .results .resultsearch h2 {
-    color: rgb(23, 23, 23);
+    color: rgb(5, 243, 255);
     margin-bottom: 15px;
     font-weight: bolder;
 }
@@ -311,4 +316,60 @@ body.darkmode::-webkit-scrollbar-thumb {
 
 body.darkmode::-webkit-scrollbar-thumb:hover {
     background: #c4b5fd;
+}
+
+.delete-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    background: #ff4d4d;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.delete-button:hover {
+    background-color: #ff1a1a;
+}
+
+button{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    width: 150px;
+    border-radius: 20px;
+    border: 2px solid #7830ec;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    color: #fff;
+    cursor: pointer;
+    font-weight: bolder;
+    box-shadow: 0 8px 20px rgba(120, 48, 236, 0.25), 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(120, 48, 236, 0.35), 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+button i {
+    color: #ff1a1a;
+    font-weight: bolder;
+}
+.boxcont .favourites .favouritelist li {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 120px;
+    cursor:pointer;
+    padding: 10px 40px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    color: #fff;
 }

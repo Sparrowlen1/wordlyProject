@@ -11,7 +11,7 @@ let topWord = "";
 
 // loading favs from local storage using getitem
 let favour = JSON.parse(localStorage.getItem("favour")) || [];
-displayFavs();
+
 
 // function to save favs to local storage using setitem
 // function saveFavs(){
@@ -60,7 +60,7 @@ async function searchword() {
         return `<h3>${meaning.partOfSpeech}</h3><ul>${definition}</ul>`;
       })
       .join("");
-    resultSearch.innerHTML = `<h2>${worddata.word}</h2>${discovered}<button id="favouriteheart"><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
+    resultSearch.innerHTML = `<h2>${worddata.word}</h2>${discovered}<button id="favouriteheart" ><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
 
     // lets now add event listener to the favourite button using append
     const favouritebutton = document.getElementById("favouriteheart");
@@ -112,7 +112,7 @@ function displayFavs() {
     favouriteList.innerHTML = "";
 
     if(favour.length === 0){
-        favouriteList.innerHTML = "<p> No favourites yet, add some captain! </p>";
+        favouriteList.innerHTML = "<p> howdy there captain, add somefavourites captain! </p>";
         return;
     }
   
