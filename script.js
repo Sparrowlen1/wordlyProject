@@ -44,6 +44,18 @@ async function searchword() {
 
     const worddata = data[0];
 
+    // the api use phonetics to store the audio url of the word so we going to check if it exist
+    let audiourl = "";
+    if (worddata.phonetics && worddata.phonetics.length > 0) {
+      // finding the first phonetic that has an audio url
+      const phoneticwithAudio = worddata.phonetics.find(
+        (phonetic) => phonetic.audio,
+      );
+      if (phoneticwithAudio) {
+        audiourl = phoneticwithAudio.audio;
+      }
+    }
+
     const discovered = worddata.meanings
       .map((meaning) => {
         const definition = meaning.definitions
@@ -59,21 +71,16 @@ async function searchword() {
         return `<h3>${meaning.partOfSpeech}</h3><ul>${definition}</ul>`;
       })
       .join("");
-    // //  lets add audio next to word
-    // let audiobutton = '';
-    // if (currenturlaudio) {
-    //   audiobutton = `button id="audioButton"><i class="fa-solid fa-volume-high"></i> hear out</button>`;
-    // } else {
-    //   audiobutton = `<button id="audioButton" disabled><i class="fa-solid fa-volume-xmark"></i> no pronunciation audio playback</button>`;
-    // }
-    // lets add a pronucniation audio if it exists
-    // if(worddata.phonetics && worddata.phonetics.length > 0){
-    //   const audio = worddata.phonetics.find(p => p.audio);
-    //   if(audio){
-    //       discovered += `<audio controls src="${audio.audio}">Your browser does not support the audio element.</audio>`;
-    //   }
-    // }
-    resultSearch.innerHTML = `<h2>${worddata.word}</h2>${discovered}<button id="favouriteheart" ><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
+    
+    resultSearch.innerHTML = `<h2>${worddata.word}</h2>${audiourl ? `<button id="pronounceButton" class="pronouncebtn"><i class="fa-solid fa-volume-high"></i> Pronounce</button>` : ''}${discovered}<button id="favouriteheart" ><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
+
+// lets now add event listener to the pronounce button using append
+    const pronounceButton = document.getElementById("pronounceButton");
+    if (pronounceButton && audiourl) {
+      pronounceButton.addEventListener("click", () => {
+        playAudio(audiourl);
+      });
+    }
 
     // lets now add event listener to the favourite button using append
     const favouritebutton = document.getElementById("favouriteheart");
@@ -85,6 +92,19 @@ async function searchword() {
     resultSearch.innerHTML = `<p>"${word}" not found captain,</p>`;
   }
 }
+
+// funcction to play the word audio when the pronounce button is clicked
+function playAudio(audiourl) {
+  try{
+  const audio = new Audio(audiourl); //here i have used the audio constructor to create a new audio object and pass the url of the audio as a parameter
+  audio.play(); // tused the buil in play method to play audio and since it returns a promise i can catch any error that might occur during playback
+}
+catch(error){
+  console.log("Audio playback error:", error);
+  alert("Sorry my fellow Sparrow, we are having trouble playing the audio");
+}
+}
+
 
 search.addEventListener("click", (e) => {
   e.preventDefault();
