@@ -12,7 +12,6 @@ let topWord = "";
 // loading favs from local storage using getitem
 let favour = JSON.parse(localStorage.getItem("favour")) || [];
 
-
 // function to save favs to local storage using setitem
 // function saveFavs(){
 //     localStorage.setItem("favour", JSON.stringify(favour));
@@ -60,13 +59,27 @@ async function searchword() {
         return `<h3>${meaning.partOfSpeech}</h3><ul>${definition}</ul>`;
       })
       .join("");
+    // //  lets add audio next to word
+    // let audiobutton = '';
+    // if (currenturlaudio) {
+    //   audiobutton = `button id="audioButton"><i class="fa-solid fa-volume-high"></i> hear out</button>`;
+    // } else {
+    //   audiobutton = `<button id="audioButton" disabled><i class="fa-solid fa-volume-xmark"></i> no pronunciation audio playback</button>`;
+    // }
+    // lets add a pronucniation audio if it exists
+    // if(worddata.phonetics && worddata.phonetics.length > 0){
+    //   const audio = worddata.phonetics.find(p => p.audio);
+    //   if(audio){
+    //       discovered += `<audio controls src="${audio.audio}">Your browser does not support the audio element.</audio>`;
+    //   }
+    // }
     resultSearch.innerHTML = `<h2>${worddata.word}</h2>${discovered}<button id="favouriteheart" ><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
 
     // lets now add event listener to the favourite button using append
     const favouritebutton = document.getElementById("favouriteheart");
     if (favouritebutton) {
-      favouritebutton.addEventListener("click", addtofavourites);   
-    };
+      favouritebutton.addEventListener("click", addtofavourites);
+    }
   } catch (error) {
     console.log("Error:", error);
     resultSearch.innerHTML = `<p>"${word}" not found captain,</p>`;
@@ -108,51 +121,50 @@ function addtofavourites() {
 
 // function to display favs in the favouritelist
 function displayFavs() {
-    // clear the current list before displaying updated favs
-    favouriteList.innerHTML = "";
+  // clear the current list before displaying updated favs
+  favouriteList.innerHTML = "";
 
-    if(favour.length === 0){
-        favouriteList.innerHTML = "<p> howdy there captain, add somefavourites captain! </p>";
-        return;
-    }
-  
+  if (favour.length === 0) {
+    favouriteList.innerHTML =
+      "<p> howdy there captain, add somefavourites captain! </p>";
+    return;
+  }
+
   favour.forEach((word) => {
     const cont = document.createElement("div");
     const favItems = document.createElement("li");
     favItems.textContent = word;
     const delet = document.createElement("button");
-    delet.textContent = "Delete from favs";
+    delet.textContent = "Delete";
     delet.classList.add("delete-button");
     delet.addEventListener("click", (e) => {
-        e.stopPropagation(); // prevents triggereingt the search when delete is clicked
-        const index = favour.indexOf(word);
-        if (index !== -1) {
-            favour.splice(index, 1);
-            localStorage.setItem("favour", JSON.stringify(favour));
-            displayFavs();
-            alert(`howdy"${word}" has been removed from your favourites`);
-        }
+      e.stopPropagation(); // prevents triggereingt the search when delete is clicked
+      const index = favour.indexOf(word);
+      if (index !== -1) {
+        favour.splice(index, 1);
+        localStorage.setItem("favour", JSON.stringify(favour));
+        displayFavs();
+        alert(`howdy"${word}" has been removed from your favourites`);
+      }
     });
     cont.appendChild(favItems);
     favouriteList.appendChild(cont);
     cont.appendChild(delet);
-
   });
 }
 
 // lets now search the a fav word when clicked
 favouriteList.addEventListener("click", (e) => {
-    // check if list is a an li or just child of li
-    let targetLi = e.target;
-    if (targetLi.tagName !== "LI") {
-        targetLi = targetLi.closest("li");
-    }
-    if (targetLi && targetLi.tagName === "LI") {
-        searchInput.value = targetLi.textContent;
-        searchword();
-    }
+  // check if list is a an li or just child of li
+  let targetLi = e.target;
+  if (targetLi.tagName !== "LI") {
+    targetLi = targetLi.closest("li");
+  }
+  if (targetLi && targetLi.tagName === "LI") {
+    searchInput.value = targetLi.textContent;
+    searchword();
+  }
 });
-
 
 // dark mode functionn
 // used the classList methods such as toggle and contains
