@@ -9,8 +9,20 @@ const themechange = document.querySelector(".themechange");
 // storing current(top) word for favourites
 let topWord = "";
 
-// loading favs from local storage using getitem
+// loading favs from local storage using getitem i.e this saves favourites
 let favour = JSON.parse(localStorage.getItem("favour")) || [];
+
+//lets load last searced data from local storage and display it when the page is loaded
+let searchedword = JSON.parse(localStorage.getItem("lastSearchedWord")) || "";
+
+if (searchedword && searchedword !== "")
+{  searchInput.value = searchedword;
+  setTimeout(()=>{
+    searchword();
+  }, 100);
+}
+// display favs on page load
+displayFavs();
 
 // function to save favs to local storage using setitem
 // function saveFavs(){
@@ -23,11 +35,11 @@ let favour = JSON.parse(localStorage.getItem("favour")) || [];
 
 async function searchword() {
   const word = searchInput.value.trim();
-  topWord = word; //this uppdates the topword with word
+  topword = word; //this uppdates the topword with word
 
   if (word === "") {
     resultSearch.innerHTML =
-      "<p> Howdy there, Please enter a word captain! </p>";
+      "<p> Howdy there, Please enter a word my sparrow </p>";
     return;
   }
   try {
@@ -39,7 +51,7 @@ async function searchword() {
     const data = await response.json();
 
     if (data.title === "No Definitions Found") {
-      throw new Error("Hmm, howdy seems we cant find the meaning");
+      throw new Error("howdy my fellow sparrow, well cant find the meaning go back to school and learn some more words");
     }
 
     const worddata = data[0];
@@ -71,10 +83,10 @@ async function searchword() {
         return `<h3>${meaning.partOfSpeech}</h3><ul>${definition}</ul>`;
       })
       .join("");
-    
-    resultSearch.innerHTML = `<h2>${worddata.word}</h2>${audiourl ? `<button id="pronounceButton" class="pronouncebtn"><i class="fa-solid fa-volume-high"></i> Pronounce</button>` : ''}${discovered}<button id="favouriteheart" ><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
 
-// lets now add event listener to the pronounce button using append
+    resultSearch.innerHTML = `<h2>${worddata.word}</h2>${audiourl ? `<button id="pronounceButton" class="pronouncebtn"><i class="fa-solid fa-volume-high"></i> Pronounce</button>` : ""}${discovered}<button id="favouriteheart" ><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
+
+    // lets now add event listener to the pronounce button using append
     const pronounceButton = document.getElementById("pronounceButton");
     if (pronounceButton && audiourl) {
       pronounceButton.addEventListener("click", () => {
@@ -95,16 +107,15 @@ async function searchword() {
 
 // funcction to play the word audio when the pronounce button is clicked
 function playAudio(audiourl) {
-  try{
-  const audio = new Audio(audiourl); //here i have used the audio constructor to create a new audio object and pass the url of the audio as a parameter
-  audio.play(); // tused the buil in play method to play audio and since it returns a promise i can catch any error that might occur during playback
+  try {
+    const audio = new Audio(audiourl); //here i have used the audio constructor to create a new audio object and pass the url of the audio as a parameter
+    // audio.preload = "auto";
+    audio.play(); // tused the buil in play method to play audio and since it returns a promise i can catch any error that might occur during playback
+  } catch (error) {
+    console.log("Audio playback error:", error);
+    alert("Sorry my fellow Sparrow, we are having trouble playing the audio");
+  }
 }
-catch(error){
-  console.log("Audio playback error:", error);
-  alert("Sorry my fellow Sparrow, we are having trouble playing the audio");
-}
-}
-
 
 search.addEventListener("click", (e) => {
   e.preventDefault();
@@ -120,23 +131,23 @@ searchInput.addEventListener("keypress", (e) => {
 
 // function to add current word to favour and save to local storage
 function addtofavourites() {
-  if (!topWord || topWord === "") {
+  if (!topword || topword === "") {
     alert("Howdy there, Please search for a word before adding to favourites");
     return;
   }
   // checked if the word exists in local storage declared globaly as favour
-  if (favour.includes(topWord)) {
+  if (favour.includes(topword)) {
     alert("well captain, find yourself a new favourite word");
     return;
   }
   // added the word to the favour array and save to local storage
-  favour.push(topWord);
+  favour.push(topword);
   // save to local storage
   localStorage.setItem("favour", JSON.stringify(favour));
   // display the updated favs list of the favour
   displayFavs();
 
-  alert(`"${topWord}" has been added to your favourites!`);
+  alert(`"${topword}" has been added to your favourites!`);
 }
 
 // function to display favs in the favouritelist
