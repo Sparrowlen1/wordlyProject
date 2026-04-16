@@ -79,13 +79,13 @@ async function searchword() {
       .join("");
 
     resultSearch.innerHTML = `<h2>${worddata.word}</h2>${audiourl ? `<button id="pronounceButton" class="pronouncebtn"><i class="fa-solid fa-volume-high"></i> Pronounce</button>` : ""}${discovered}<button id="favouriteheart" ><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
+
     const pronounceButton = document.getElementById("pronounceButton");
     if (pronounceButton && audiourl) {
       pronounceButton.addEventListener("click", () => {
         playAudio(audiourl);
       });
     }
-
     const favouritebutton = document.getElementById("favouriteheart");
     if (favouritebutton) {
       favouritebutton.addEventListener("click", addtofavourites);
@@ -96,12 +96,11 @@ async function searchword() {
   }
 }
 
-// funcction to play the word audio when the pronounce button is clicked
 function playAudio(audiourl) {
   try {
-    const audio = new Audio(audiourl); //audio constructor
+    const audio = new Audio(audiourl);
     // audio.preload = "auto";
-    audio.play(); //built in play method to play the audio
+    audio.play();
   } catch (error) {
     console.log("Audio playback error:", error);
     alert("Sorry my fellow Sparrow, we are having trouble playing the audio");
@@ -120,26 +119,25 @@ searchInput.addEventListener("keypress", (e) => {
   }
 });
 
-
 function addtofavourites() {
   if (!topword || topword === "") {
     alert("Howdy there, Please search for a word before adding to favourites");
     return;
   }
   if (favour.includes(topword)) {
-    alert("well captain, find yourself a new favourite word");
+    alert("well captain, find yourself a new favourite word aye aye captain");
     return;
   }
   favour.push(topword);
+  // save to local storage
   localStorage.setItem("favour", JSON.stringify(favour));
   displayFavs();
 
-  alert(`"${topword}" has been added to your favourites!`);
+  alert(`"${topword}" well Sparrow, your favs has been updatded`);
 }
 
 function displayFavs() {
   favouriteList.innerHTML = "";
-
   if (favour.length === 0) {
     favouriteList.innerHTML =
       "<p> howdy there captain, add somefavourites captain! </p>";
