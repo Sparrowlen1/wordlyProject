@@ -205,7 +205,7 @@ function toggletheme() {
   const moonicon = themechange.querySelector("i");
   const themetext = themechange.querySelector("p");
 
-  if (document.body.classList.contains("dark-mode")) {
+  if (document.body.classList.contains("darkmode")) {
     moonicon.className = "fa-regular fa-moon";
     themetext.textContent = "Dark Mode";
   } else {
