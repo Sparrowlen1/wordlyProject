@@ -4,13 +4,10 @@ const resultSearch = document.querySelector(".resultsearch");
 const favouriteList = document.querySelector(".favouritelist");
 const themechange = document.querySelector(".themechange");
 
-// storing current(top) word for favourites
-let topWord = "";
+let topWord = ""; //store word
 
-// loading favs from local storage using getitem i.e this saves favourites
 let favour = JSON.parse(localStorage.getItem("favour")) || [];
 
-//lets load last searced data from local storage and display it when the page is loaded
 let searchedword = JSON.parse(localStorage.getItem("lastSearchedWord")) || "";
 
 if (searchedword && searchedword !== "") {
@@ -19,7 +16,6 @@ if (searchedword && searchedword !== "") {
     searchword();
   }, 100);
 }
-// display favs on page load
 displayFavs();
 
 // function to save favs to local storage using setitem
@@ -33,7 +29,7 @@ displayFavs();
 
 async function searchword() {
   const word = searchInput.value.trim();
-  topword = word; //this uppdates the topword with word
+  topword = word;
   localStorage.setItem("lastSearchedWord", JSON.stringify(word));
   if (word === "") {
     resultSearch.innerHTML =
@@ -56,10 +52,8 @@ async function searchword() {
 
     const worddata = data[0];
 
-    // the api use phonetics to store the audio url of the word so we going to check if it exist
     let audiourl = "";
     if (worddata.phonetics && worddata.phonetics.length > 0) {
-      // finding the first phonetic that has an audio url
       const phoneticwithAudio = worddata.phonetics.find(
         (phonetic) => phonetic.audio,
       );
@@ -85,8 +79,6 @@ async function searchword() {
       .join("");
 
     resultSearch.innerHTML = `<h2>${worddata.word}</h2>${audiourl ? `<button id="pronounceButton" class="pronouncebtn"><i class="fa-solid fa-volume-high"></i> Pronounce</button>` : ""}${discovered}<button id="favouriteheart" ><i class="fa-regular fa-heart"></i> Add to favouritess</button>`;
-
-    // lets now add event listener to the pronounce button using append
     const pronounceButton = document.getElementById("pronounceButton");
     if (pronounceButton && audiourl) {
       pronounceButton.addEventListener("click", () => {
@@ -94,7 +86,6 @@ async function searchword() {
       });
     }
 
-    // lets now add event listener to the favourite button using append
     const favouritebutton = document.getElementById("favouriteheart");
     if (favouritebutton) {
       favouritebutton.addEventListener("click", addtofavourites);
@@ -108,9 +99,9 @@ async function searchword() {
 // funcction to play the word audio when the pronounce button is clicked
 function playAudio(audiourl) {
   try {
-    const audio = new Audio(audiourl); //here i have used the audio constructor to create a new audio object and pass the url of the audio as a parameter
+    const audio = new Audio(audiourl); //audio constructor
     // audio.preload = "auto";
-    audio.play(); // tused the buil in play method to play audio and since it returns a promise i can catch any error that might occur during playback
+    audio.play(); //built in play method to play the audio
   } catch (error) {
     console.log("Audio playback error:", error);
     alert("Sorry my fellow Sparrow, we are having trouble playing the audio");
@@ -129,30 +120,24 @@ searchInput.addEventListener("keypress", (e) => {
   }
 });
 
-// function to add current word to favour and save to local storage
+
 function addtofavourites() {
   if (!topword || topword === "") {
     alert("Howdy there, Please search for a word before adding to favourites");
     return;
   }
-  // checked if the word exists in local storage declared globaly as favour
   if (favour.includes(topword)) {
     alert("well captain, find yourself a new favourite word");
     return;
   }
-  // added the word to the favour array and save to local storage
   favour.push(topword);
-  // save to local storage
   localStorage.setItem("favour", JSON.stringify(favour));
-  // display the updated favs list of the favour
   displayFavs();
 
   alert(`"${topword}" has been added to your favourites!`);
 }
 
-// function to display favs in the favouritelist
 function displayFavs() {
-  // clear the current list before displaying updated favs
   favouriteList.innerHTML = "";
 
   if (favour.length === 0) {
@@ -184,7 +169,6 @@ function displayFavs() {
   });
 }
 
-// lets now search the a fav word when clicked
 favouriteList.addEventListener("click", (e) => {
   // check if list is a an li or just child of li
   let targetLi = e.target;
