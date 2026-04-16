@@ -1,5 +1,3 @@
-console.log("JavaScript is loaded and running!");
-
 const search = document.getElementById("searchB");
 const searchInput = document.getElementById("searchI");
 const resultSearch = document.querySelector(".resultsearch");
@@ -15,9 +13,9 @@ let favour = JSON.parse(localStorage.getItem("favour")) || [];
 //lets load last searced data from local storage and display it when the page is loaded
 let searchedword = JSON.parse(localStorage.getItem("lastSearchedWord")) || "";
 
-if (searchedword && searchedword !== "")
-{  searchInput.value = searchedword;
-  setTimeout(()=>{
+if (searchedword && searchedword !== "") {
+  searchInput.value = searchedword;
+  setTimeout(() => {
     searchword();
   }, 100);
 }
@@ -36,7 +34,7 @@ displayFavs();
 async function searchword() {
   const word = searchInput.value.trim();
   topword = word; //this uppdates the topword with word
-
+  localStorage.setItem("lastSearchedWord", JSON.stringify(word));
   if (word === "") {
     resultSearch.innerHTML =
       "<p> Howdy there, Please enter a word my sparrow </p>";
@@ -51,7 +49,9 @@ async function searchword() {
     const data = await response.json();
 
     if (data.title === "No Definitions Found") {
-      throw new Error("howdy my fellow sparrow, well cant find the meaning go back to school and learn some more words");
+      throw new Error(
+        "howdy my fellow sparrow, well cant find the meaning go back to school and learn some more words",
+      );
     }
 
     const worddata = data[0];
