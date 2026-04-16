@@ -37,7 +37,7 @@ async function searchword() {
   localStorage.setItem("lastSearchedWord", JSON.stringify(word));
   if (word === "") {
     resultSearch.innerHTML =
-      "<p> Howdy there, Please enter a word my sparrow </p>";
+      "<p> Howdy there, please enter a word my sparrow </p>";
     return;
   }
   try {
@@ -167,7 +167,7 @@ function displayFavs() {
     favItems.textContent = word;
     const delet = document.createElement("button");
     delet.textContent = "Delete";
-    delet.classList.add("delete-button");
+    delet.classList.add("deletebutton");
     delet.addEventListener("click", (e) => {
       e.stopPropagation(); // prevents triggereingt the search when delete is clicked
       const index = favour.indexOf(word);
