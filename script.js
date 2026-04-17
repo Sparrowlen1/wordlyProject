@@ -53,6 +53,7 @@ async function searchword() {
     const worddata = data[0];
 
     let audiourl = "";
+    //free dic has phonetics array with audio url
     if (worddata.phonetics && worddata.phonetics.length > 0) {
       const phoneticwithAudio = worddata.phonetics.find(
         (phonetic) => phonetic.audio,
@@ -98,11 +99,11 @@ async function searchword() {
 
 function playAudio(audiourl) {
   try {
-    const audio = new Audio(audiourl);
+    const audio = new Audio(audiourl); //constructs a new audio object with the provided URL
     // audio.preload = "auto";
-    audio.play();
+    audio.play();//audio method
   } catch (error) {
-    console.log("Audio playback error:", error);
+    console.log("well unfortunately my cap audio cant be played:", error);
     alert("Sorry my fellow Sparrow, we are having trouble playing the audio");
   }
 }
@@ -121,7 +122,7 @@ searchInput.addEventListener("keypress", (e) => {
 
 function addtofavourites() {
   if (!topword || topword === "") {
-    alert("Howdy there, Please search for a word before adding to favourites");
+    alert("Howdy there cap, please search for a word before adding to favourites");
     return;
   }
   if (favour.includes(topword)) {
@@ -129,7 +130,7 @@ function addtofavourites() {
     return;
   }
   favour.push(topword);
-  // save to local storage
+  // save to local storage after word has been pushed to the array
   localStorage.setItem("favour", JSON.stringify(favour));
   displayFavs();
 
@@ -152,10 +153,10 @@ function displayFavs() {
     delet.textContent = "Delete";
     delet.classList.add("deletebutton");
     delet.addEventListener("click", (e) => {
-      e.stopPropagation(); // prevents triggereingt the search when delete is clicked
-      const index = favour.indexOf(word);
+      e.stopPropagation(); // prevents triggereingt the search when delete is clicked. well it will aso search it
+      const index = favour.indexOf(word);//index of word and check if its above -1
       if (index !== -1) {
-        favour.splice(index, 1);
+        favour.splice(index, 1); //deletes the word from the array
         localStorage.setItem("favour", JSON.stringify(favour));
         displayFavs();
         alert(`howdy"${word}" has been removed from your favourites`);
