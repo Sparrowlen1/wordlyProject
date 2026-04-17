@@ -169,7 +169,6 @@ function displayFavs() {
 }
 
 favouriteList.addEventListener("click", (e) => {
-  // check if list is a an li or just child of li
   let targetLi = e.target;
   if (targetLi.tagName !== "LI") {
     targetLi = targetLi.closest("li");
@@ -180,8 +179,7 @@ favouriteList.addEventListener("click", (e) => {
   }
 });
 
-// dark mode functionn
-// used the classList methods such as toggle and contains
+//darmode
 function toggletheme() {
   document.body.classList.toggle("darkmode");
 
