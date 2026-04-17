@@ -202,7 +202,6 @@ body {
     padding: 10px;
 }
 
-/*dark theme*/
 body.darkmode {
     background: linear-gradient(135deg, #0a0a0f 0%, #14141f 50%, #1a1a2e 100%);
 }
